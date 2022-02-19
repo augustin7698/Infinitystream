@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+body {
+	text-align: center;
+	font-family: "Roboto", sans-serif;
+	background: #fff;
+	margin: 0 0 100px 0;
+	overflow-x: hidden;
+}
+
+button {
+	border: solid 1px #000;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+#return {
+	cursor: pointer;
+	margin: 20px auto;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+	cursor: default;
+}
+
+section {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100vw;
+}
+
+iframe {
+	width: 80vw;
+	height: 65vh;
+	margin: 0 10vw;
+	border: solid 1px #000;
+	border-radius: 10px;
+}
+
+img {
+	width: 10vw;
+	height: 12.5vw;
+	margin: 6vw 3vw 0 3vw;
+	border: solid #000 2px;
+	border-radius: 7px;
+	cursor: pointer;
+	transition: all 100ms;
+}
+
+h3 {
+	font-size: 20px;
+	margin: auto 1vw;
+	width: 14vw;
+	position: absolute;
+	text-align: center;
+}
+
+.documentaire > img {
+	width: 24vw;
+	margin: 6vw 4vw 0 4vw;
+}
+
+.documentaire > h3 {
+ 	width: 28vw;
+ 	margin: auto 2vw;
+}
+
+img:hover {
+	transform: scale(1.1);
+}
+
+@media only screen and (max-width: 1200px) {
+	img {
+		margin-top: 10vw;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	img {
+		margin-top: 15vw;
+	}
+}
