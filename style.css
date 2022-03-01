@@ -25,10 +25,22 @@ a {
 	cursor: default;
 }
 
-section {
+#section {
 	display: flex;
 	flex-wrap: wrap;
-	width: 100vw;
+	justify-content: center;
+}
+
+.sous-section {
+	display: flex;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+	background: #fff;
 }
 
 iframe {
@@ -40,35 +52,25 @@ iframe {
 }
 
 img {
-	width: 10vw;
-	height: 12.5vw;
+	width: auto;
+	height: 14vw;
 	margin: 6vw 3vw 0 3vw;
-	border: solid #000 2px;
+	border: solid #000 3px;
 	border-radius: 7px;
 	cursor: pointer;
 	transition: all 100ms;
+	min-width: 135px;
 }
 
 h3 {
 	font-size: 20px;
-	margin: auto 1vw;
+	margin: auto;
 	width: 14vw;
-	position: absolute;
 	text-align: center;
 }
 
-.documentaire > img {
-	width: 24vw;
-	margin: 6vw 4vw 0 4vw;
-}
-
-.documentaire > h3 {
- 	width: 28vw;
- 	margin: auto 2vw;
-}
-
 img:hover {
-	transform: scale(1.1);
+	transform: scale(1.1) translateY(-10px);
 }
 
 @media only screen and (max-width: 1200px) {
