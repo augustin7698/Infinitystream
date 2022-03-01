@@ -5,7 +5,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="table.js"></script>
 </head>
 <body>
@@ -18,7 +17,7 @@
 label = document.location.href.split("|")[1];
 link = document.location.href.split("?")[1];
 
-if (label == undefined && link == undefined) {
+if (label == undefined || link == undefined) {
 	window.open('index.html', '_self');
 }
 
@@ -26,57 +25,60 @@ label = label.replace("%20", " ");
 link = link.split("|")[0];
 
 document.getElementsByTagName("iframe")[0].src = link;
-x = i = 0;
-strlog = "/";
+
+function getNumberOfMovie()  {
+	x = 0;
+	while (tableLink[x]) {
+		x++;
+	}
+	return x;
+}
+
+function getwidth() {
+    x = width = 0;
+    while (document.getElementsByTagName("a")[x]) {
+        width = width + document.getElementsByTagName("a")[x].offsetWidth;
+        x++;
+    }
+    return width;
+}
+
+async function wait(Ms, FuncToExe) {
+	await new Promise(resolve => setTimeout(resolve, Ms));
+	eval(arguments[1] + "()");
+}
+
+
+NumberOfMovie = getNumberOfMovie();
+width = reboot = 0;
+log = "/";
 
 function complete() {
-	x = 0;
-	for (var i = 0; i < 3; i++) {
-		if (tableLabel[x] != undefined) {
-			if (label == tableLabel[x] && tableLink[x] != link && strlog.includes("/" + tableLink[x] + "/") == false) {
-				strlog = strlog + "/" + tableLink[x] + "/";
-				if (tableLabel[x] == "documentaire") {
-					i = i + 1;
-				}
-				z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?" + tableLink[x] + "|" + tableLabel[x] + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
-				document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + z;
-			}
-			else {
-				i = i - 1;
-			}
-			x = x + 1
-		} else {
-			x = 0;
-			i = i - 1;
+	while (width < window.innerWidth) {
+		rand = Math.floor(Math.random() * NumberOfMovie);
+		if (!log.includes(rand)) {
+			log = log + "/" + rand;
+			content = "<a class=\"" + tableLabel[rand] + "\" href=\"view.html?" + tableLink[rand] + "|" + tableLabel[rand] + "\"><img src=\"" + tablePicture[rand]  + "\" alt=\"image\"><h3>" + tableName[rand] + "</h3></a>";
+			document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + content;
+			width = width + document.getElementById("section").lastChild.offsetWidth;
 		}
 	}
-	i = i - 3;
-	for (var i = i; i < 3; i++) {
-		if (tableLabel[x] != undefined) {
-			if (label != tableLabel[x] && tableLink[x] != link && strlog.includes("/" + tableLink[x] + "/") == false) {
-				if (tableLabel[x] == "documentaire") {
-					if (i == 2) {
-						while (tableLabel[x] == "documentaire" || tableLink[x] == link) {
-							x = x + 1;
-						}
-						i = i + 1;
-					}
-					i = i + 1;
-				}
-				z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?" + tableLink[x] + "|" + tableLabel[x] + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
-				document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + z;
-			}
-			else {
-				i = i - 1;
-			}
-			x = x + 1
-		} else {
-			x = 0;
-			i = i - 1;
-		}
-	}
-
+	delet()
 }
+
+async function delet() {
+	width = getwidth();
+	if (width > window.innerWidth) {
+		document.getElementById("section").lastChild.remove();
+		delet()
+	} else {
+		reboot++;
+		if (reboot < 500) {
+			await wait(100, "delet");
+		}
+	}
+}
+
 complete();
 </script>
 </html>
