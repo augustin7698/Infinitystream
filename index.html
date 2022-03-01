@@ -12,38 +12,19 @@
 <body>
 	<h1>InfinityStream</h1>
 	<h2>Bienvenue sur le site de streaming le plus simple de monde</h2>
-	<button onClick="viewContent('all')">Tous</button>
-	<button onClick="viewContent('film')">Films</button>
-	<button onClick="viewContent('animation')">Films d'animations</button>
-	<button onClick="viewContent('documentaire')">Documentaire</button>
-	<section id="section"></section>
+	<section id="suggestion"></section>
+	<section id="section" style="justify-content: start"></section>
 	<script type="text/javascript">
 		
 function complete() {
 	x = 0;
 	while (tableLink[x] != undefined) {
-		z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?" + tableLink[x] + "|" + tableLabel[x] + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
-		document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + z;
-		x = x + 1;
-	}
-}
-
-function viewContent(input) {
-	elementNumber = 0;
-	if (input == "all") {
-		while (document.getElementsByTagName("a")[elementNumber] != undefined) {
-			document.getElementsByTagName("a")[elementNumber].style.display = "block";
-			elementNumber = elementNumber + 1;
+		if (!document.getElementById(tableLabel[x])) {
+			document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + "<section class=\"sous-section\" id=\"" + tableLabel[x] + "\"></section>";
 		}
-	}
-	while (document.getElementsByTagName("a")[elementNumber] != undefined && input != "all") {
-		document.getElementsByTagName("a")[elementNumber].style.display = "none";
-		elementNumber = elementNumber + 1;
-	}
-	elementNumber = 0;
-	while (document.getElementsByClassName(input)[elementNumber] != undefined && input != "all") {
-		document.getElementsByClassName(input)[elementNumber].style.display = "block";
-		elementNumber = elementNumber + 1;
+		z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?" + tableLink[x] + "|" + tableLabel[x] + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
+		document.getElementById(tableLabel[x]).innerHTML = document.getElementById(tableLabel[x]).innerHTML + z;
+		x = x + 1;
 	}
 }
 complete()
