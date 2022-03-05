@@ -2,7 +2,7 @@
 
 body {
 	text-align: center;
-	font-family: "Roboto", sans-serif;
+	font-family: arial;
 	background: #fff;
 	margin: 0 0 100px 0;
 	overflow-x: hidden;
@@ -33,30 +33,25 @@ button:hover {
 }
 
 #input > input {
+	padding: 0;
 	border: solid 1px #000;
-	border-radius: 5px;
+	border-radius: 5px 5px 0 0;
 	width: 20vw;
 	margin: 20px 10vw 5px;
 }
 
-#suggestion {
-	backdrop-filter: blur(13px);
-}
-
-#suggestion2 {
-	background: #FFF;
-}
-
 #suggestion2, #suggestion {
-	width: 25vw;
-	margin: 0 2.5vw;
+	width: 20vw;
+	margin: 0 10vw;
 	display: none;
 	position: absolute;
 	flex-direction: column;
 	justify-content: space-around;	
 	border: solid #000 1px;
-	border-radius: 10px;
+	border-radius: 0 0 10px 10px;
 	z-index: 9999999;
+	background-color: rgb(255 255 255 / 50%);
+	backdrop-filter: blur(5px);
 }
 
 #suggestion > a, #suggestion2 > a {
