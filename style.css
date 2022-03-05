@@ -9,20 +9,72 @@ body {
 }
 
 button {
-	border: solid 1px #000;
-	border-radius: 10px;
+	border: solid 1px #fff;
+	border-radius: 5px;
 	cursor: pointer;
+	margin: 0 20px;
+}
+
+button:hover {
+	border: solid 1px #000;
 }
 
 #return {
 	cursor: pointer;
 	margin: 20px auto;
+	color: #000;
+	text-decoration: none;
 }
 
-a {
+#input {
+	width: 100vw;
+	justify-content: start;
+	display: flex;
+}
+
+#input > input {
+	border: solid 1px #000;
+	border-radius: 5px;
+	width: 20vw;
+	margin: 20px 10vw 5px;
+}
+
+#suggestion {
+	backdrop-filter: blur(13px);
+}
+
+#suggestion2 {
+	background: #FFF;
+}
+
+#suggestion2, #suggestion {
+	width: 25vw;
+	margin: 0 2.5vw;
+	display: none;
+	position: absolute;
+	flex-direction: column;
+	justify-content: space-around;	
+	border: solid #000 1px;
+	border-radius: 10px;
+	z-index: 9999999;
+}
+
+#suggestion > a, #suggestion2 > a {
+	margin: 5px auto;
+	cursor: pointer;
+	color: #000;
+	text-decoration: none;
+}
+
+#suggestion > a:hover, #suggestion2 > a:hover, #return:hover {
+	text-decoration: underline #000;
+}
+
+#section > a, #section > .sous-section > a {
 	color: #000;
 	text-decoration: none;
 	cursor: default;
+	margin: 6vw 3vw 0 3vw;
 }
 
 #section {
@@ -46,15 +98,15 @@ a {
 iframe {
 	width: 80vw;
 	height: 65vh;
-	margin: 0 10vw;
+	margin: 50px 10vw;
 	border: solid 1px #000;
 	border-radius: 10px;
+	overflow: hidden
 }
 
 img {
 	width: auto;
 	height: 14vw;
-	margin: 6vw 3vw 0 3vw;
 	border: solid #000 3px;
 	border-radius: 7px;
 	cursor: pointer;
