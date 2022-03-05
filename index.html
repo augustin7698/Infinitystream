@@ -9,25 +9,128 @@
 	<script src="table.js"></script>
 </head>
 
-<body>
+<body onclick="document.getElementById('suggestion').style.display = 'none'">
+	<div id="input">
+		<input type="text" placeholder="Search your movie" onkeydown="search()">
+	</div>
+	<div id="suggestion">
+		<a href=""></a>
+		<a href=""></a>
+		<a href=""></a>
+		<a href=""></a>
+		<a href=""></a>
+	</div>
 	<h1>InfinityStream</h1>
-	<h2>Bienvenue sur le site de streaming le plus simple de monde</h2>
-	<section id="suggestion"></section>
-	<section id="section" style="justify-content: start"></section>
+	<section id="tag"></section>
+	<section id="section"></section>
 	<script type="text/javascript">
 		
 function complete() {
-	x = 0;
-	while (tableLink[x] != undefined) {
-		if (!document.getElementById(tableLabel[x])) {
-			document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + "<section class=\"sous-section\" id=\"" + tableLabel[x] + "\"></section>";
+	urlParams = new URLSearchParams(window.location.search);
+	if (urlParams.get("search") != null && tableLabel.indexOf(urlParams.get("search")) >= 0) {
+		x = 0;
+		while (tableLink[x] != undefined) {
+			if (tableLabel[x] == urlParams.get("search")) {
+				z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?id=" + x + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
+				document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + z;
+			}
+			x = x + 1;
 		}
-		z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?" + tableLink[x] + "|" + tableLabel[x] + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
-		document.getElementById(tableLabel[x]).innerHTML = document.getElementById(tableLabel[x]).innerHTML + z;
-		x = x + 1;
+	} else {
+		x = 0;
+		while (tableLink[x] != undefined) {
+			if (!document.getElementById(tableLabel[x])) {
+				document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + "<section class=\"sous-section\" id=\"" + tableLabel[x] + "\"></section>";
+			}
+			z = "<a class=\"" + tableLabel[x] + "\" href=\"view.html?id=" + x + "\"><img src=\"" + tablePicture[x]  + "\" alt=\"image\"><h3>" + tableName[x] + "</h3></a>";
+			document.getElementById(tableLabel[x]).innerHTML = document.getElementById(tableLabel[x]).innerHTML + z;
+			x = x + 1;
+		}
 	}
+	
 }
 complete()
-	</script>
+
+
+
+function tag() {
+	log = button = "";
+	x = 0
+	while (tableLabel[x]) {
+		if (! log.includes("§" + tableLabel[x] + "§")) {
+			log = log + "§" + tableLabel[x] + "§";
+			button = button + "<button onclick=\"window.open(window.location.pathname + '?search=' + '" + tableLabel[x] + "', '_self')\">" + tableLabel[x] + "</button>";
+		}
+		x++;
+	}
+	document.getElementById("tag").innerHTML = "<button onclick=\"window.open(window.location.pathname, '_self')\">All</button>" + button;
+}
+tag()
+
+
+function levenshteinDistance(str1, str2) {
+	//str1 = tolower(str1);
+	//str2 = tolower(str2);
+	const track = Array(str2.length + 1).fill(null).map(() =>
+	Array(str1.length + 1).fill(null));
+	for (let i = 0; i <= str1.length; i += 1) {
+		track[0][i] = i;
+	}
+	for (let j = 0; j <= str2.length; j += 1) {
+		track[j][0] = j;
+	}
+	for (let j = 1; j <= str2.length; j += 1) {
+		for (let i = 1; i <= str1.length; i += 1) {
+			const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+			track[j][i] = Math.min(
+				track[j][i - 1] + 1,
+				track[j - 1][i] + 1,
+				track[j - 1][i - 1] + indicator,
+			);
+		}
+	}
+	return (track[str2.length][str1.length]);
+}
+
+
+
+function search() {
+	dicDistance = {};
+	x = 0;
+
+	// value of the input
+	text = document.getElementsByTagName("input")[0].value;
+	
+	// ranger ces valeurs dans un tableau
+	while (tableName[x]) {
+		mot = tableName[x]
+		dist = levenshteinDistance(text, mot)
+		dicDistance[dist] = mot;
+		x++;
+	}
+
+	// supprimer les valeurs indéfinit
+	suggestionA = {};
+	x = suggestion = 0;
+	while (suggestion < 5 && tableName[x]) {
+		if (dicDistance[x]) {
+			suggestionA[suggestion] = dicDistance[x];
+			suggestion++;
+		}
+		x++;
+	}
+
+	// modifier le HTML
+
+	document.getElementById("suggestion").style.display = "flex";
+	for (var i = suggestion - 1; i+1 > 0; i--) {
+		document.getElementById("suggestion").getElementsByTagName("a")[i].innerHTML = suggestionA[i];
+		index = tableName.indexOf(suggestionA[i]);
+		document.getElementById("suggestion").getElementsByTagName("a")[i].href = "view.html?" + tableLink[index] + "|" + tableLabel[index];
+	}
+}
+
+
+</script>
 </body>
 </html>
