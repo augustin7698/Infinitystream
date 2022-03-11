@@ -21,17 +21,3 @@ tableLabel = [
 	"film",
 	"documentaire"
 ];
-
-for (var i = Math.floor(Math.random(100) * 100) - 1; i >= 0; i--) {
-	firstLink = tableLink.shift();
-	tableLink = tableLink.concat([firstLink]);
-
-	firstPicture = tablePicture.shift();
-	tablePicture = tablePicture.concat([firstPicture]);
-
-	firstName = tableName.shift();
-	tableName = tableName.concat([firstName]);
-
-	firstLabel = tableLabel.shift();
-	tableLabel = tableLabel.concat([firstLabel]);
-}
