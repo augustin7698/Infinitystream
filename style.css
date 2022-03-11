@@ -21,9 +21,11 @@ button:hover {
 
 #return {
 	cursor: pointer;
-	margin: 20px auto;
+	margin: auto 40vw auto 0;
 	color: #000;
 	text-decoration: none;
+	width: 20vw;
+	text-align: center;
 }
 
 #input {
@@ -36,7 +38,9 @@ button:hover {
 	padding: 0;
 	border: solid 1px #000;
 	border-radius: 5px 5px 0 0;
-	width: 20vw;
+	width: 18vw;
+	height: 2vh;
+	padding: 1vw;
 	margin: 20px 10vw 5px;
 }
 
@@ -73,6 +77,23 @@ button:hover {
 }
 
 #section {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+hr {
+	width: 90vw;
+}
+
+#section2 > a, #section2 > .sous-section > a {
+	color: #000;
+	text-decoration: none;
+	cursor: default;
+	margin: 6vw 3vw 0 3vw;
+}
+
+#section2 {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
