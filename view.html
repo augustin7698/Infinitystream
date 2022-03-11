@@ -8,9 +8,10 @@
 	<script src="table.js"></script>
 </head>
 <body onclick="document.getElementById('suggestion2').style.display = 'none'">
-	<a href="index.html" id="return">Home</a>
+	
 	<div id="input">
 		<input type="text" placeholder="Search your movie" onkeydown="search(event)">
+		<a href="index.html" id="return">Home</a>
 	</div>
 
 	<div id="suggestion2">
@@ -22,6 +23,8 @@
 	</div>
 	<iframe src="" allowfullscreen allow="autoplay"></iframe>
 	<section id="tag"></section>
+	<section id="section2"></section>
+	<hr />
 	<section id="section"></section>
 </body>
 <script type="text/javascript">
@@ -37,31 +40,49 @@ function iframeSrc() {
 }
 iframeSrc()
 
+function random() {
+	urlParams = new URLSearchParams(window.location.search);
+
+	ul = document.querySelectorAll("#section");
+	for (var ulIndex = ul.length - 1; ulIndex >= 0; ulIndex--) {
+		for (i = ul[ulIndex].children.length; i >= 0; i--) {
+			ul[ulIndex].appendChild(ul[ulIndex].children[Math.random() * i | 0]);
+		}
+	}
+
+	ul = document.querySelectorAll(".sous-section");
+	for (var ulIndex = ul.length - 1; ulIndex >= 0; ulIndex--) {
+		for (i = ul[ulIndex].children.length; i >= 0; i--) {
+			ul[ulIndex].appendChild(ul[ulIndex].children[Math.random() * i | 0]);
+		}
+	}
+}
+
 
 function complete() {
-	label = tableLabel[Number(urlParams.get("id"))];
+	label = Number(urlParams.get("id"));
 
 	// get all movie where the label is the same
 	content = "";
 	movieId = 0;
 	while (tableLabel[movieId]) {
-		if (tableLabel[movieId] == label) {
+		if (tableLabel[movieId] == tableLabel[label] && movieId != label) {
 			if (!document.getElementById(tableLabel[movieId])) {
-				document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + "<section class=\"sous-section\" id=\"" + tableLabel[movieId] + "\"></section>";
+				document.getElementById("section2").innerHTML = document.getElementById("section2").innerHTML + "<section class=\"sous-section\" id=\"" + tableLabel[movieId] + "\"></section>";
 			}
 			z = "<a class=\"" + tableLabel[movieId] + "\" href=\"view.html?id=" + movieId + "\"><img src=\"" + tablePicture[movieId]  + "\" alt=\"image\"><h3>" + tableName[movieId] + "</h3></a>";
 			document.getElementById(tableLabel[movieId]).innerHTML = document.getElementById(tableLabel[movieId]).innerHTML + z;
 		}
 		movieId = movieId + 1;
 	}
-	document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + content;
+	document.getElementById("section2").innerHTML = document.getElementById("section2").innerHTML + content;
 
 	// get all movie where the label is not the same
 
 	content = "";
 	movieId = 0;
 	while (tableLabel[movieId]) {
-		if (tableLabel[movieId] != label) {
+		if (tableLabel[movieId] != tableLabel[label]) {
 			if (!document.getElementById(tableLabel[movieId])) {
 				document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + "<section class=\"sous-section\" id=\"" + tableLabel[movieId] + "\"></section>";
 			}
@@ -71,6 +92,7 @@ function complete() {
 		movieId = movieId + 1;
 	}
 	document.getElementById("section").innerHTML = document.getElementById("section").innerHTML + content;
+	random();
 }
 complete();
 
@@ -126,7 +148,6 @@ function search(event) {
 		}
 		x++;
 	}
-	console.log(suggestion)
 
 	// modifier le HTML
 
@@ -135,8 +156,7 @@ function search(event) {
 		suggestion--;
 		document.getElementById("suggestion2").getElementsByTagName("a")[suggestion].innerHTML = suggestionA[suggestion];
 		index = tableName.indexOf(suggestionA[suggestion]);
-		document.getElementById("suggestion2").getElementsByTagName("a")[suggestion].href = "view.html?" + tableLink[index] + "|" + tableLabel[index];
-		console.log(suggestion);
+		document.getElementById("suggestion2").getElementsByTagName("a")[suggestion].href = "view.html?id=" + index;
 	}
 
 }
