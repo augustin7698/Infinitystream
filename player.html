@@ -8,20 +8,40 @@
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script src="table.js"></script>
 </head>
-
-<body id="index">
+<body id="player">
 	<header>
 		<h1 onclick="document.getElementsByTagName('sidebar')[0].style.display = 'block';">InfinityStream</h1>
 		<input id="searchBar" type="text" placeholder="Search your movie" onkeydown="search(this.value)">
 	</header>
+	<iframe src="" allowfullscreen allow="autoplay"></iframe>
 	<sidebar>
 		<ul id="labelList"></ul>
 		<h2>searchResult</h2>
 		<ul id="searchResult"></ul>
+		<a href="index.html">
+			<p>Home</p>
+		</a>
 	</sidebar>
-	
 	<main></main>
-	<script type="text/javascript">
+</body>
+<script type="text/javascript">
+
+// load the movie in the iframe
+function loadIframe() {
+	// get the movie name
+	urlParams = new URLSearchParams(window.location.search);
+	name = decodeURI(urlParams.get("name"));
+	// get the movie
+	movie = movies.find(movie => movie.name == name);
+	// if the movie doesn't exist go to the index
+	if (!movie) {
+		window.open("index.html", "_self")
+	}
+	// display the movie
+	document.getElementsByTagName("iframe")[0].src = movie.link;
+}
+loadIframe();
+
 
 SELECTEDLABELS = [];
 
@@ -82,6 +102,9 @@ function selectLabel(label) {
 
 	// if the label is empty, select all the labels
 	if (label == "") {
+		for (i =SELECTEDLABELS.length - 1; i >= 0; i--) {
+			document.getElementById(SELECTEDLABELS[i]).style.border = "solid 1px #000";
+		}
 		SELECTEDLABELS = [];
 		
 	// add the label to the selected labels or remove it
@@ -164,5 +187,4 @@ document.getElementsByTagName("body")[0].onclick = function() {
 }
 
 </script>
-</body>
 </html>
